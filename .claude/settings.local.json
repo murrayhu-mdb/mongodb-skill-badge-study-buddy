@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Skill(mongodb:mongodb-search-and-ai)",
+      "mcp__plugin_mongodb_mongodb__list-connections",
+      "mcp__plugin_mongodb_mongodb__atlas-list-clusters",
+      "mcp__plugin_mongodb_mongodb__atlas-inspect-cluster",
+      "mcp__plugin_mongodb_mongodb__atlas-list-projects",
+      "mcp__plugin_mongodb_mongodb__atlas-connect-cluster",
+      "mcp__plugin_mongodb_mongodb__list-databases",
+      "mcp__plugin_mongodb_mongodb__list-collections",
+      "mcp__plugin_mongodb_mongodb__collection-schema",
+      "mcp__plugin_mongodb_mongodb__collection-indexes",
+      "mcp__plugin_mongodb_mongodb__aggregate"
+    ]
+  }
+}

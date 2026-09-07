@@ -1,0 +1,12 @@
+{
+  "name": "citizenship-app",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "ingest": "node ingest.js"
+  },
+  "dependencies": {
+    "mongodb": "^6.9.0"
+  }
+}
