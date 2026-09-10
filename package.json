@@ -4,9 +4,14 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "ingest": "node ingest.js"
+    "ingest": "node ingest.js",
+    "start": "node server.js",
+    "dev": "node --watch server.js"
   },
   "dependencies": {
-    "mongodb": "^6.9.0"
+    "dotenv": "^17.4.2",
+    "express": "^4.22.2",
+    "mongodb": "^6.9.0",
+    "openai": "^7.10.0"
   }
 }

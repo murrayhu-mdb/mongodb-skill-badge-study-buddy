@@ -1,0 +1,80 @@
+[
+  {
+    "file": "crud-operations.md",
+    "name": "CRUD Operations",
+    "sourceUrl": "https://www.mongodb.com/docs/manual/crud/",
+    "badgeUrl": "https://learn.mongodb.com/courses/crud-operations-in-mongodb"
+  },
+  {
+    "file": "indexes.md",
+    "name": "Indexing Design Fundamentals",
+    "sourceUrl": "https://www.mongodb.com/docs/manual/indexes/",
+    "badgeUrl": "https://learn.mongodb.com/courses/indexing-design-fundamentals"
+  },
+  {
+    "file": "sharding.md",
+    "name": "Sharding Strategies",
+    "sourceUrl": "https://www.mongodb.com/docs/manual/sharding/",
+    "badgeUrl": "https://learn.mongodb.com/courses/sharding-strategies"
+  },
+  {
+    "file": "vector-search.md",
+    "name": "Vector Search Performance",
+    "sourceUrl": "https://www.mongodb.com/docs/atlas/atlas-vector-search/vector-search-stage/",
+    "badgeUrl": "https://learn.mongodb.com/courses/vector-search-performance"
+  },
+  {
+    "file": "encryption-at-rest.md",
+    "name": "Encryption at Rest",
+    "sourceUrl": "https://www.mongodb.com/docs/manual/core/security-encryption-at-rest/",
+    "badgeUrl": "https://learn.mongodb.com/courses/encryption-at-rest"
+  },
+  {
+    "file": "security.md",
+    "name": "Networking Security: Self-Managed",
+    "sourceUrl": "https://www.mongodb.com/docs/manual/security/",
+    "badgeUrl": "https://learn.mongodb.com/courses/networking-security-self-managed"
+  },
+  {
+    "file": "cluster-reliability.md",
+    "name": "Data Resilience: Self-Managed",
+    "sourceUrl": "https://www.mongodb.com/docs/manual/administration/monitoring/",
+    "badgeUrl": "https://learn.mongodb.com/courses/data-resilience-self-managed"
+  },
+  {
+    "file": "replication.md",
+    "name": "Replication",
+    "sourceUrl": "https://www.mongodb.com/docs/manual/replication/",
+    "badgeUrl": "https://learn.mongodb.com/courses/data-resilience-self-managed"
+  },
+  {
+    "file": "aggregation-pipeline.md",
+    "name": "Aggregation Pipeline",
+    "sourceUrl": "https://www.mongodb.com/docs/manual/aggregation/",
+    "badgeUrl": "https://learn.mongodb.com/skills"
+  },
+  {
+    "file": "data-modeling.md",
+    "name": "Data Modeling",
+    "sourceUrl": "https://www.mongodb.com/docs/manual/data-modeling/",
+    "badgeUrl": "https://learn.mongodb.com/skills"
+  },
+  {
+    "file": "schema-patterns.md",
+    "name": "Schema Design Anti-Patterns",
+    "sourceUrl": "https://www.mongodb.com/developer/products/mongodb/schema-design-anti-pattern-summary/",
+    "badgeUrl": "https://learn.mongodb.com/skills"
+  },
+  {
+    "file": "architecture-overview.md",
+    "name": "MongoDB Architecture",
+    "sourceUrl": "https://www.mongodb.com/docs/manual/introduction/",
+    "badgeUrl": "https://learn.mongodb.com/skills"
+  },
+  {
+    "file": "overview.md",
+    "name": "MongoDB Basics",
+    "sourceUrl": "https://www.mongodb.com/docs/manual/introduction/",
+    "badgeUrl": "https://learn.mongodb.com/skills"
+  }
+]

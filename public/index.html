@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>MongoDB Skill Badge Study Buddy</title>
+<link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-mark">M</div>
+      <div>
+        <div class="brand-title">Study Buddy</div>
+        <div class="brand-sub">MongoDB Skill Badges</div>
+      </div>
+    </div>
+    <nav id="sidebar-nav">
+      <button class="tab-btn active" data-route="#/home">Home</button>
+      <div id="sidebar-sections"></div>
+    </nav>
+    <div class="sidebar-footer">
+      <button id="reset-btn" class="secondary" title="Clear session progress">Reset session</button>
+    </div>
+  </aside>
+
+  <main class="content">
+    <section class="tab" id="tab-home">
+      <header class="tab-header">
+        <h1>MongoDB Skill Badge Study Buddy</h1>
+        <p class="sub">Pre-learning for the official MongoDB skill badges, grounded in the docs.</p>
+      </header>
+
+      <div id="continue-banner"></div>
+
+      <div class="panel home-ask">
+        <div class="picker-label">Ask anything about MongoDB</div>
+        <form id="home-ask-form" class="row">
+          <input id="home-ask-input" type="text" placeholder="e.g. When should I shard vs scale up?" autocomplete="off" required />
+          <button type="submit">Ask</button>
+        </form>
+        <div id="home-ask-chips" class="chip-row"></div>
+        <div id="home-ask-output" class="output home-ask-output"></div>
+        <div class="dev-toggle-row">
+          <button type="button" id="dev-toggle" class="ghost">Developer view: how this search works ▸</button>
+        </div>
+        <div id="dev-panel" class="dev-panel hidden"></div>
+      </div>
+
+      <h2 class="section-heading">Topics</h2>
+      <div id="topic-grid" class="topic-grid"></div>
+    </section>
+
+    <section class="tab hidden" id="tab-topic"></section>
+  </main>
+</div>
+
+<script src="/app.js"></script>
+</body>
+</html>

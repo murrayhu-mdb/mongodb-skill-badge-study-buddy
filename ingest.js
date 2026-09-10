@@ -1,6 +1,11 @@
 import { readdir, readFile } from "node:fs/promises";
 import { join, basename } from "node:path";
 import { MongoClient } from "mongodb";
+import topics from "./topics.json" with { type: "json" };
+
+const TOPIC_BY_FILE = Object.fromEntries(
+  topics.map((t) => [t.file, { name: t.name, sourceUrl: t.sourceUrl }]),
+);
 
 const MONGODB_URI = process.env.MONGODB_URI;
 const DB_NAME = process.env.DB_NAME || "citizenship_app";
@@ -90,12 +95,15 @@ async function main() {
     for (const file of files) {
       const md = await readFile(join(CONTENT_DIR, file), "utf8");
       const sections = splitIntoSections(md);
+      const meta = TOPIC_BY_FILE[basename(file)] || { name: basename(file), sourceUrl: null };
       for (const { title, body } of sections) {
         for (const chunk of chunkText(body)) {
           docs.push({
             text: chunk,
             source: basename(file),
             section: title,
+            topic: meta.name,
+            source_url: meta.sourceUrl,
           });
         }
       }

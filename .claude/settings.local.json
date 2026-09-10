@@ -11,7 +11,28 @@
       "mcp__plugin_mongodb_mongodb__list-collections",
       "mcp__plugin_mongodb_mongodb__collection-schema",
       "mcp__plugin_mongodb_mongodb__collection-indexes",
-      "mcp__plugin_mongodb_mongodb__aggregate"
+      "mcp__plugin_mongodb_mongodb__aggregate",
+      "Bash(npm install *)",
+      "Bash(env)",
+      "Bash(npm start *)",
+      "Bash(curl -s http://localhost:3000 -o /dev/null -w \"%{http_code}\")",
+      "Bash(curl *)",
+      "Bash(node *)",
+      "Bash(npm run *)",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\('quiz keys:', list\\(d.keys\\(\\)\\)\\); print\\('questions:', len\\(d['quiz']['questions']\\)\\); print\\('types:', [q['type'] for q in d['quiz']['questions']]\\)\")",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\('keys:', list\\(d.keys\\(\\)\\)\\); print\\('questions:', len\\(d['quiz']['questions']\\)\\); print\\('types:', [q['type'] for q in d['quiz']['questions']]\\); print\\('sample:', json.dumps\\(d['quiz']['questions'][0], indent=2\\)[:400]\\)\")",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); q=d['quiz']['questions']; print\\('n:',len\\(q\\),'types:',[x['type'] for x in q]\\); print\\(json.dumps\\(q[0],indent=2\\)\\); print\\('---'\\); print\\(json.dumps\\([x for x in q if x['type']=='free'][0],indent=2\\)\\)\")",
+      "Bash(xargs kill -9)",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\('keys:', list\\(d.keys\\(\\)\\)\\); print\\('steps:', len\\(d.get\\('steps',[]\\)\\)\\); print\\('chunks:', len\\(d.get\\('chunks',[]\\)\\)\\); print\\('step0 keys:', list\\(d['steps'][0].keys\\(\\)\\) if d.get\\('steps'\\) else 'none'\\); print\\('step0 title:', d['steps'][0].get\\('title'\\) if d.get\\('steps'\\) else ''\\)\")",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\('steps:', len\\(d.get\\('steps',[]\\)\\)\\); print\\('chunks:', len\\(d.get\\('chunks',[]\\)\\)\\); [print\\(f'{i+1}. {s[\\\\\"title\\\\\"]} \\({len\\(s.get\\(\\\\\"chunkIds\\\\\",[]\\)\\)} refs\\)'\\) for i,s in enumerate\\(d.get\\('steps',[]\\)\\)]\")",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\('has body:', 'body' in d\\); print\\('len:', len\\(d.get\\('body',''\\)\\)\\); print\\(d.get\\('body',''\\)[:200]\\)\")",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); qs=d.get\\('quiz',{}\\).get\\('questions',[]\\); print\\('n:', len\\(qs\\)\\); [print\\(f'{i+1}. {q[\\\\\"type\\\\\"]}: {q[\\\\\"question\\\\\"][:60]}'\\) for i,q in enumerate\\(qs\\)]\")",
+      "Bash(python3 -c \"import sys,json; d=json.loads\\(sys.stdin.read\\(\\)\\); print\\('chunks:', len\\(d.get\\('chunks',[]\\)\\)\\); [print\\(f\\\\\"  score={c.get\\('score',0\\):.3f} topic={c['topic']} section={c['section']}\\\\\"\\) for c in d.get\\('chunks',[]\\)]; print\\('error:', d.get\\('error'\\)\\)\")",
+      "Bash(python3 -c ' *)",
+      "Bash(python3 -c \"import sys,json; d=json.loads\\(sys.stdin.read\\(\\)\\); print\\('error:', d.get\\('error'\\)\\); print\\('questions:', len\\(d.get\\('quiz',{}\\).get\\('questions',[]\\)\\)\\)\")",
+      "Bash(git check-ignore *)",
+      "Bash(git rm *)",
+      "Bash(git add *)"
     ]
   }
 }
