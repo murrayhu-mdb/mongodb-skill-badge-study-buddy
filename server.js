@@ -1,5 +1,6 @@
 import "dotenv/config";
 import express from "express";
+import rateLimit from "express-rate-limit";
 import { MongoClient, ObjectId } from "mongodb";
 import OpenAI from "openai";
 import topics from "./topics.json" with { type: "json" };
@@ -172,7 +173,37 @@ function extractJSON(text) {
 }
 
 const app = express();
+app.set("trust proxy", 1);
 app.use(express.json({ limit: "2mb" }));
+
+// Rate-limit all API endpoints to blunt casual abuse of the LLM.
+const apiLimiter = rateLimit({
+  windowMs: 60 * 1000,
+  max: 30,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: "Too many requests, please slow down." },
+});
+
+// Optional HTTP Basic auth. Set APP_BASIC_USER and APP_BASIC_PASS in .env to
+// gate the whole app (browser will prompt on first visit). Leave unset for
+// local dev. Enable this before sharing via ngrok or any public URL.
+const APP_BASIC_USER = process.env.APP_BASIC_USER;
+const APP_BASIC_PASS = process.env.APP_BASIC_PASS;
+function basicAuth(req, res, next) {
+  if (!APP_BASIC_USER || !APP_BASIC_PASS) return next();
+  const header = req.get("authorization") || "";
+  const [scheme, encoded] = header.split(" ");
+  if (scheme === "Basic" && encoded) {
+    const [user, pass] = Buffer.from(encoded, "base64").toString().split(":");
+    if (user === APP_BASIC_USER && pass === APP_BASIC_PASS) return next();
+  }
+  res.set("WWW-Authenticate", 'Basic realm="Study Buddy"');
+  return res.status(401).send("Authentication required.");
+}
+
+app.use(basicAuth);
+app.use("/api", apiLimiter);
 app.use(express.static("public"));
 
 app.get("/api/topics", async (_req, res) => {
@@ -390,6 +421,6 @@ app.post("/api/debug-search", async (req, res) => {
   }
 });
 
-app.listen(PORT, () => {
-  console.log(`Listening on http://localhost:${PORT}`);
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`Listening on http://0.0.0.0:${PORT}`);
 });
