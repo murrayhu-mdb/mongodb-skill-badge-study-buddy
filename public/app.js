@@ -414,7 +414,21 @@ function initHomeAsk() {
     try {
       const data = await postJSON("/api/ask", { question: q, topics: [] });
       output.innerHTML = "";
-      renderResponse(output, data.answer ?? "(No answer returned.)", data.chunks, `home-ask-${++homeAskCounter}`);
+      const wrap = el("div", { className: "answer-wrap" });
+      const controls = el("div", { className: "answer-controls" });
+      const qLabel = el("div", { className: "answer-q muted" }, `Q: ${q}`);
+      const collapseBtn = el("button", { type: "button", className: "ghost", title: "Collapse" }, "▾ Collapse");
+      const closeBtn = el("button", { type: "button", className: "ghost", title: "Remove" }, "✕");
+      controls.append(qLabel, collapseBtn, closeBtn);
+      const body = el("div", { className: "answer-body" });
+      wrap.append(controls, body);
+      output.append(wrap);
+      renderResponse(body, data.answer ?? "(No answer returned.)", data.chunks, `home-ask-${++homeAskCounter}`);
+      collapseBtn.addEventListener("click", () => {
+        const collapsed = wrap.classList.toggle("collapsed");
+        collapseBtn.textContent = collapsed ? "▸ Expand" : "▾ Collapse";
+      });
+      closeBtn.addEventListener("click", () => { output.innerHTML = ""; });
       renderTopicGrid();
     } catch (err) {
       output.innerHTML = "";
@@ -753,13 +767,16 @@ function route() {
   const hash = window.location.hash || "#/home";
   const home = document.getElementById("tab-home");
   const topicView = document.getElementById("tab-topic");
+  const build = document.getElementById("tab-build");
+  home.classList.add("hidden");
+  topicView.classList.add("hidden");
+  build.classList.add("hidden");
   if (hash.startsWith("#/topic/")) {
-    home.classList.add("hidden");
     topicView.classList.remove("hidden");
-    const slug = hash.slice("#/topic/".length);
-    renderTopicView(slug);
+    renderTopicView(hash.slice("#/topic/".length));
+  } else if (hash === "#/build") {
+    build.classList.remove("hidden");
   } else {
-    topicView.classList.add("hidden");
     home.classList.remove("hidden");
     renderHome();
   }
@@ -769,8 +786,8 @@ function route() {
 
 document.getElementById("sidebar-nav").addEventListener("click", (e) => {
   const btn = e.target.closest("[data-route]");
-  if (btn && btn.dataset.route === "#/home") {
-    window.location.hash = "#/home";
+  if (btn && btn.dataset.route) {
+    window.location.hash = btn.dataset.route;
   }
 });
 

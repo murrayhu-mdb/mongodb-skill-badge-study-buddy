@@ -18,6 +18,7 @@
     </div>
     <nav id="sidebar-nav">
       <button class="tab-btn active" data-route="#/home">Home</button>
+      <button class="tab-btn" data-route="#/build">Build Your Own</button>
       <div id="sidebar-sections"></div>
     </nav>
     <div class="sidebar-footer">
@@ -53,6 +54,103 @@
     </section>
 
     <section class="tab hidden" id="tab-topic"></section>
+
+    <section class="tab hidden" id="tab-build">
+      <header class="tab-header">
+        <h1>Build Your Own</h1>
+        <p class="sub">How this app was made — and how you can make one too, with no coding background.</p>
+      </header>
+
+      <div class="panel build-intro">
+        <p>Everything in this app — the database, the AI-powered search, the website itself — was built by someone with no software engineering background, using an AI coding assistant called <strong>Claude Code</strong> and MongoDB's own tools for it. If you can describe what you want in plain English, you can build something like this too. Here's exactly how, step by step.</p>
+      </div>
+
+      <ol class="build-steps">
+        <li class="build-step">
+          <div class="build-step-num">1</div>
+          <div class="build-step-body">
+            <h3>Pick your topic and content</h3>
+            <p>Decide what you want your learning hub to teach, and find the source material for it — a set of documents, a website's help pages, an internal wiki, anything text-based and reasonably well-organized. This project used MongoDB's own public documentation, but the same approach works for any subject.</p>
+          </div>
+        </li>
+        <li class="build-step">
+          <div class="build-step-num">2</div>
+          <div class="build-step-body">
+            <h3>Set up a free MongoDB Atlas account</h3>
+            <p>MongoDB Atlas is where your content lives, along with the AI's ability to search it. Go to <a href="https://cloud.mongodb.com" target="_blank" rel="noopener">cloud.mongodb.com</a>, sign up free, and create an organization and a project — the setup wizard guides you through this. It gives you a free-tier database cluster (called M0) to run everything on, at no cost.</p>
+          </div>
+        </li>
+        <li class="build-step">
+          <div class="build-step-num">3</div>
+          <div class="build-step-body">
+            <h3>Create a secure service account</h3>
+            <p>Rather than using your personal login, create a "service account" — a machine identity with its own ID and secret key — so the AI assistant can act on your project without your personal credentials. Grant it just enough permission to manage your one project, not your whole organization — a good habit called <em>least privilege</em>.</p>
+          </div>
+        </li>
+        <li class="build-step">
+          <div class="build-step-num">4</div>
+          <div class="build-step-body">
+            <h3>Install Claude Code and MongoDB's plugin</h3>
+            <p>Claude Code is an AI assistant that writes and runs code for you from plain-English instructions, right in your computer's terminal. Install it, then install MongoDB's official plugin, which teaches it how to directly create databases, search indexes, and queries in your project:</p>
+            <pre><code>/plugin install mongodb@claude-plugins-official
+/reload-plugins
+/mongodb:mongodb-mcp-setup</code></pre>
+            <p>That last command walks you through connecting your service account credentials.</p>
+          </div>
+        </li>
+        <li class="build-step">
+          <div class="build-step-num">5</div>
+          <div class="build-step-body">
+            <h3>Ask it to load your content in</h3>
+            <p>With everything connected, just describe what you want:</p>
+            <blockquote>"Fetch [your source pages] and save each as a clean markdown file in a content folder. Then write a script that reads those files, splits them into overlapping chunks, and loads each chunk into a MongoDB collection."</blockquote>
+            <p>Claude Code writes and runs the actual code for you.</p>
+          </div>
+        </li>
+        <li class="build-step">
+          <div class="build-step-num">6</div>
+          <div class="build-step-body">
+            <h3>Ask it to set up AI-powered search</h3>
+            <blockquote>"Set up MongoDB Atlas Vector Search on this collection, using automated embedding so I don't have to generate embeddings manually."</blockquote>
+            <p>This lets someone ask a question in their own words and get back the most relevant piece of your content, even if they don't use your exact wording.</p>
+          </div>
+        </li>
+        <li class="build-step">
+          <div class="build-step-num">7</div>
+          <div class="build-step-body">
+            <h3>Ask it to build the backend</h3>
+            <blockquote>"Build a simple web server with an endpoint that takes a question, searches the content for the most relevant matches, and uses an AI model to answer grounded in those matches."</blockquote>
+            <p>You'll need access to an AI model to generate answers — MongoDB employees can use Grove (an internal tool); anyone else can use any OpenAI-compatible provider.</p>
+          </div>
+        </li>
+        <li class="build-step">
+          <div class="build-step-num">8</div>
+          <div class="build-step-body">
+            <h3>Ask it to build the website</h3>
+            <blockquote>"Build a simple webpage with a chat-style interface for asking questions, styled simply and cleanly."</blockquote>
+            <p>Claude Code builds the actual HTML, styling, and interactive behavior.</p>
+          </div>
+        </li>
+        <li class="build-step">
+          <div class="build-step-num">9</div>
+          <div class="build-step-body">
+            <h3>Test it and just describe what's wrong</h3>
+            <p>Click around. If something looks off or you want it to work differently, describe the problem in plain English — <em>"the answers aren't showing the source"</em> or <em>"I want a dropdown of topics instead of free text"</em> — and Claude Code makes the change. This is genuinely how every other feature in this app got built: by describing a need, not by writing code.</p>
+          </div>
+        </li>
+        <li class="build-step">
+          <div class="build-step-num">10</div>
+          <div class="build-step-body">
+            <h3>Share it</h3>
+            <p>Once it works locally, share it temporarily with a free tool called <a href="https://ngrok.com" target="_blank" rel="noopener">ngrok</a>, which gives your locally running app a public web address without needing to formally deploy it anywhere.</p>
+          </div>
+        </li>
+      </ol>
+
+      <div class="panel build-outro">
+        <p>That's the whole process. Every feature in this app — the guided lessons, the quizzes, the hybrid search, the source citations — was built exactly this way. <strong>If you can explain what you want, you can build this.</strong></p>
+      </div>
+    </section>
   </main>
 </div>
 

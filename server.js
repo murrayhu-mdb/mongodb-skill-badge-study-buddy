@@ -27,7 +27,7 @@ if (!GROVE_API_KEY || !GROVE_BASE_URL || !GROVE_MODEL) {
   process.exit(1);
 }
 
-const client = new MongoClient(MONGODB_URI);
+const client = new MongoClient(MONGODB_URI, { appName: "mongodb-skill-badge-study-buddy" });
 await client.connect();
 const coll = client.db(DB_NAME).collection(COLLECTION);
 

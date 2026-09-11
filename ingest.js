@@ -83,7 +83,7 @@ function chunkText(text, target = TARGET_CHARS, overlap = OVERLAP_CHARS) {
 }
 
 async function main() {
-  const client = new MongoClient(MONGODB_URI);
+  const client = new MongoClient(MONGODB_URI, { appName: "mongodb-skill-badge-study-buddy" });
   await client.connect();
   try {
     const coll = client.db(DB_NAME).collection(COLLECTION);
