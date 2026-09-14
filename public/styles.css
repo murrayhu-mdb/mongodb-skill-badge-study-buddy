@@ -684,26 +684,48 @@ a.cite:hover { text-decoration: underline; }
   justify-content: flex-end;
 }
 #dev-toggle {
-  background: transparent;
-  color: var(--muted);
-  border: 1px dashed var(--border-strong);
+  background: rgba(0, 237, 100, 0.06);
+  color: var(--accent);
+  border: 1px solid rgba(0, 237, 100, 0.35);
   border-radius: 6px;
-  padding: .35rem .65rem;
-  font-size: .72rem;
-  font-weight: 500;
-  letter-spacing: .04em;
+  padding: .45rem .8rem;
+  font-size: .78rem;
+  font-weight: 600;
+  letter-spacing: .03em;
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  position: relative;
+  animation: dev-pulse 2.4s var(--ease) infinite;
 }
 #dev-toggle:hover:not(:disabled) {
-  color: var(--text);
-  border-color: var(--muted);
-  background: transparent;
+  color: var(--accent);
+  border-color: var(--accent);
+  background: rgba(0, 237, 100, 0.12);
+  animation: none;
 }
 #dev-toggle::before {
   content: "{ }";
   color: var(--accent);
-  margin-right: .4rem;
-  opacity: .7;
+  margin-right: .45rem;
+  font-weight: 700;
+}
+#dev-toggle::after {
+  content: "Try it";
+  display: inline-block;
+  margin-left: .6rem;
+  padding: .1rem .4rem;
+  font-size: .62rem;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: #001e2b;
+  background: var(--accent);
+  border-radius: 3px;
+  font-weight: 700;
+  vertical-align: middle;
+}
+@keyframes dev-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(0, 237, 100, 0.4); }
+  50%      { box-shadow: 0 0 0 6px rgba(0, 237, 100, 0); }
 }
 .dev-panel {
   margin-top: .75rem;
@@ -877,7 +899,9 @@ a.cite:hover { text-decoration: underline; }
   color: var(--muted);
   font-size: .88rem;
   font-style: italic;
+  transition: opacity .2s var(--ease);
 }
+.progress-loading-label.fade { opacity: 0; }
 .progress-loading-track {
   position: relative;
   height: 4px;

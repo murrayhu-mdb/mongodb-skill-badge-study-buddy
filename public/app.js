@@ -29,12 +29,26 @@ function spinner(label = "Thinking…") {
   return el("div", { className: "loading" }, el("span", { className: "spinner" }), label);
 }
 
-function progressBar(label = "Working…") {
+function progressBar(labels = ["Working…"]) {
+  const list = Array.isArray(labels) ? labels : [labels];
   const wrap = el("div", { className: "progress-loading" });
-  wrap.append(el("div", { className: "progress-loading-label" }, label));
+  const labelEl = el("div", { className: "progress-loading-label" }, list[0]);
+  wrap.append(labelEl);
   const track = el("div", { className: "progress-loading-track" });
   track.append(el("div", { className: "progress-loading-bar" }));
   wrap.append(track);
+  if (list.length > 1) {
+    let i = 0;
+    const timer = setInterval(() => {
+      if (!document.body.contains(wrap)) { clearInterval(timer); return; }
+      i = (i + 1) % list.length;
+      labelEl.classList.add("fade");
+      setTimeout(() => {
+        labelEl.textContent = list[i];
+        labelEl.classList.remove("fade");
+      }, 200);
+    }, 2600);
+  }
   return wrap;
 }
 
@@ -530,7 +544,14 @@ async function renderTopicView(slug) {
     el("p", { className: "sub" }, TOPIC_META[topic.name]?.description || ""),
   );
   host.append(header);
-  const loading = el("div", { className: "panel" }, progressBar("Building your learning path…"));
+  const loading = el("div", { className: "panel" }, progressBar([
+    "Building your learning path…",
+    "Pulling the relevant chapters from the guide…",
+    "Structuring the material into teaching steps…",
+    "Drafting concrete examples for each step…",
+    "Wiring up citations back to the source docs…",
+    "Almost there — polishing the final layout…",
+  ]));
   host.append(loading);
   try {
     const data = await postJSON("/api/learning-path", { topic: topic.name });
@@ -604,7 +625,19 @@ function renderLearningPath(host, topic, data) {
         b.disabled = true;
         const orig = body.innerHTML;
         body.innerHTML = "";
-        body.append(progressBar(`${label}ing…`));
+        body.append(progressBar(mode === "simplify" ? [
+          "Simplifying…",
+          "Reading the current explanation…",
+          "Trimming the jargon…",
+          "Rewriting in plainer language…",
+          "Keeping the concrete example…",
+        ] : [
+          "Expanding…",
+          "Looking for edge cases and gotchas…",
+          "Adding related concepts and context…",
+          "Working in a richer example…",
+          "Reviewing the deeper version…",
+        ]));
         try {
           const r = await postJSON("/api/rephrase", {
             mode,
@@ -640,7 +673,14 @@ async function startQuiz(host, topic, allChunks) {
     ),
     quizHost,
   );
-  quizHost.append(progressBar("Generating quiz…"));
+  quizHost.append(progressBar([
+    "Generating your quiz…",
+    "Reviewing what the topic covers…",
+    "Drafting multiple-choice questions…",
+    "Adding a few free-text questions to stretch you…",
+    "Attaching source citations to each question…",
+    "Finalising the answer key…",
+  ]));
   try {
     const data = await postJSON("/api/quiz", { topics: [topic.name], count: 10 });
     quizHost.innerHTML = "";
@@ -722,7 +762,12 @@ function renderQuiz(container, topic, quiz, chunks) {
         showBtn.disabled = true;
         ta.disabled = true;
         resultBox.innerHTML = "";
-        resultBox.append(progressBar("Grading…"));
+        resultBox.append(progressBar([
+    "Grading your answer…",
+    "Comparing against the expected response…",
+    "Looking at meaning, not exact wording…",
+    "Writing brief feedback…",
+  ]));
         try {
           const { score, feedback } = await postJSON("/api/grade", { question: q.question, expected: q.answer, actual: val });
           finish(score, feedback, q.answer);
