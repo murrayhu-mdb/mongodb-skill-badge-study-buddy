@@ -29,6 +29,15 @@ function spinner(label = "Thinking…") {
   return el("div", { className: "loading" }, el("span", { className: "spinner" }), label);
 }
 
+function progressBar(label = "Working…") {
+  const wrap = el("div", { className: "progress-loading" });
+  wrap.append(el("div", { className: "progress-loading-label" }, label));
+  const track = el("div", { className: "progress-loading-track" });
+  track.append(el("div", { className: "progress-loading-bar" }));
+  wrap.append(track);
+  return wrap;
+}
+
 function slugify(name) {
   return name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
 }
@@ -521,7 +530,7 @@ async function renderTopicView(slug) {
     el("p", { className: "sub" }, TOPIC_META[topic.name]?.description || ""),
   );
   host.append(header);
-  const loading = el("div", { className: "panel" }, spinner("Building your learning path…"));
+  const loading = el("div", { className: "panel" }, progressBar("Building your learning path…"));
   host.append(loading);
   try {
     const data = await postJSON("/api/learning-path", { topic: topic.name });
@@ -595,7 +604,7 @@ function renderLearningPath(host, topic, data) {
         b.disabled = true;
         const orig = body.innerHTML;
         body.innerHTML = "";
-        body.append(spinner(`${label}ing…`));
+        body.append(progressBar(`${label}ing…`));
         try {
           const r = await postJSON("/api/rephrase", {
             mode,
@@ -631,7 +640,7 @@ async function startQuiz(host, topic, allChunks) {
     ),
     quizHost,
   );
-  quizHost.append(spinner("Generating quiz…"));
+  quizHost.append(progressBar("Generating quiz…"));
   try {
     const data = await postJSON("/api/quiz", { topics: [topic.name], count: 10 });
     quizHost.innerHTML = "";
@@ -713,7 +722,7 @@ function renderQuiz(container, topic, quiz, chunks) {
         showBtn.disabled = true;
         ta.disabled = true;
         resultBox.innerHTML = "";
-        resultBox.append(spinner("Grading…"));
+        resultBox.append(progressBar("Grading…"));
         try {
           const { score, feedback } = await postJSON("/api/grade", { question: q.question, expected: q.answer, actual: val });
           finish(score, feedback, q.answer);

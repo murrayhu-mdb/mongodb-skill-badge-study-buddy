@@ -676,7 +676,35 @@ a.cite:hover { text-decoration: underline; }
 }
 
 /* Developer view */
-.dev-toggle-row { margin-top: .75rem; }
+.dev-toggle-row {
+  margin-top: 1rem;
+  padding-top: .85rem;
+  border-top: 1px dashed var(--border);
+  display: flex;
+  justify-content: flex-end;
+}
+#dev-toggle {
+  background: transparent;
+  color: var(--muted);
+  border: 1px dashed var(--border-strong);
+  border-radius: 6px;
+  padding: .35rem .65rem;
+  font-size: .72rem;
+  font-weight: 500;
+  letter-spacing: .04em;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+#dev-toggle:hover:not(:disabled) {
+  color: var(--text);
+  border-color: var(--muted);
+  background: transparent;
+}
+#dev-toggle::before {
+  content: "{ }";
+  color: var(--accent);
+  margin-right: .4rem;
+  opacity: .7;
+}
 .dev-panel {
   margin-top: .75rem;
   padding: 1rem;
@@ -837,3 +865,37 @@ a.cite:hover { text-decoration: underline; }
 }
 .answer-wrap.collapsed .answer-body { display: none; }
 .answer-wrap.collapsed .answer-controls { border-bottom: none; padding-bottom: 0; }
+
+/* Indeterminate progress bar (for LLM calls where we can't know real progress) */
+.progress-loading {
+  display: flex;
+  flex-direction: column;
+  gap: .6rem;
+  padding: .5rem 0;
+}
+.progress-loading-label {
+  color: var(--muted);
+  font-size: .88rem;
+  font-style: italic;
+}
+.progress-loading-track {
+  position: relative;
+  height: 4px;
+  background: var(--panel-2);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.progress-loading-bar {
+  position: absolute;
+  top: 0;
+  left: -35%;
+  width: 35%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  border-radius: 2px;
+  animation: progress-slide 1.4s ease-in-out infinite;
+}
+@keyframes progress-slide {
+  0%   { left: -35%; }
+  100% { left: 100%; }
+}
