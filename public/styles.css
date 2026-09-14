@@ -923,3 +923,46 @@ a.cite:hover { text-decoration: underline; }
   0%   { left: -35%; }
   100% { left: 100%; }
 }
+
+/* Build Your Own — tip callouts */
+.build-tip {
+  margin-top: .9rem;
+  padding: .7rem .9rem .7rem 1rem;
+  background: var(--panel-2);
+  border-left: 3px solid var(--accent);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  font-size: .88rem;
+  color: var(--text);
+  line-height: 1.55;
+}
+.build-tip-label {
+  display: inline-block;
+  font-size: .62rem;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-right: .5rem;
+  padding: .1rem .4rem;
+  border: 1px solid var(--accent-dim);
+  border-radius: 3px;
+  background: rgba(0,237,100,0.05);
+  vertical-align: middle;
+}
+.build-tip-warn {
+  border-left-color: #ffb43c;
+  background: rgba(255,180,60,0.04);
+}
+.build-tip-warn .build-tip-label {
+  color: #ffb43c;
+  border-color: rgba(255,180,60,0.3);
+  background: rgba(255,180,60,0.06);
+}
+.build-tip ul { margin: .5rem 0 0; padding-left: 1.2rem; }
+.build-tip li { margin: .3rem 0; }
+.build-tip code {
+  background: var(--panel);
+  padding: .1rem .35rem;
+  border-radius: 3px;
+  font-size: .82em;
+}

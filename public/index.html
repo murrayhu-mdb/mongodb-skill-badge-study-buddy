@@ -71,6 +71,7 @@
           <div class="build-step-body">
             <h3>Pick your topic and content</h3>
             <p>Decide what you want your learning hub to teach, and find the source material for it — a set of documents, a website's help pages, an internal wiki, anything text-based and reasonably well-organized. This project used MongoDB's own public documentation, but the same approach works for any subject.</p>
+            <div class="build-tip"><span class="build-tip-label">Tip</span> Aim for 5–20 pages of source material to start. Too little and the AI has nothing meaningful to search; too much makes setup slower and quizzes less focused. You can always add more later.</div>
           </div>
         </li>
         <li class="build-step">
@@ -78,6 +79,7 @@
           <div class="build-step-body">
             <h3>Set up a free MongoDB Atlas account</h3>
             <p>MongoDB Atlas is where your content lives, along with the AI's ability to search it. Go to <a href="https://cloud.mongodb.com" target="_blank" rel="noopener">cloud.mongodb.com</a>, sign up free, and create an organization and a project — the setup wizard guides you through this. It gives you a free-tier database cluster (called M0) to run everything on, at no cost.</p>
+            <div class="build-tip"><span class="build-tip-label">Tip</span> M0 is perfect for building and testing locally. When you deploy publicly (step 11) you'll need to upgrade to a paid tier — see the note there before spending too long on M0.</div>
           </div>
         </li>
         <li class="build-step">
@@ -85,6 +87,7 @@
           <div class="build-step-body">
             <h3>Create a secure service account</h3>
             <p>Rather than using your personal login, create a "service account" — a machine identity with its own ID and secret key — so the AI assistant can act on your project without your personal credentials. Grant it just enough permission to manage your one project, not your whole organization — a good habit called <em>least privilege</em>.</p>
+            <div class="build-tip"><span class="build-tip-label">Tip</span> Copy the ID and secret straight into a password manager the moment they're shown — the secret is only revealed once. If you lose it, you have to rotate the account.</div>
           </div>
         </li>
         <li class="build-step">
@@ -96,6 +99,7 @@
 /reload-plugins
 /mongodb:mongodb-mcp-setup</code></pre>
             <p>That last command walks you through connecting your service account credentials.</p>
+            <div class="build-tip"><span class="build-tip-label">Tip</span> If <code>/plugin install</code> fails with an SSH host key error, use the plugin marketplace's <code>https://</code> URL instead of SSH. On Mac or Windows you'll also need <a href="https://nodejs.org" target="_blank" rel="noopener">Node.js</a> installed first.</div>
           </div>
         </li>
         <li class="build-step">
@@ -103,32 +107,36 @@
           <div class="build-step-body">
             <h3>Ask it to load your content in</h3>
             <p>With everything connected, just describe what you want:</p>
-            <blockquote>"Fetch [your source pages] and save each as a clean markdown file in a content folder. Then write a script that reads those files, splits them into overlapping chunks, and loads each chunk into a MongoDB collection."</blockquote>
+            <blockquote>"Fetch [your source pages] and save each as a clean markdown file in a content folder. Then write a script that reads those files, splits them into overlapping chunks, and loads each chunk into a MongoDB collection. Include the source URL and section heading for each chunk so I can cite them later."</blockquote>
             <p>Claude Code writes and runs the actual code for you.</p>
+            <div class="build-tip"><span class="build-tip-label">Tip</span> Chunk size matters. Ask for chunks of roughly 800–1500 characters with a small overlap between them — big enough for context, small enough for search to be precise.</div>
           </div>
         </li>
         <li class="build-step">
           <div class="build-step-num">6</div>
           <div class="build-step-body">
             <h3>Ask it to set up AI-powered search</h3>
-            <blockquote>"Set up MongoDB Atlas Vector Search on this collection, using automated embedding so I don't have to generate embeddings manually."</blockquote>
-            <p>This lets someone ask a question in their own words and get back the most relevant piece of your content, even if they don't use your exact wording.</p>
+            <blockquote>"Set up MongoDB Atlas Vector Search on this collection, using automated embedding so I don't have to generate embeddings manually. Also add an Atlas Search (full-text) index on the same field and combine both with $rankFusion for hybrid search."</blockquote>
+            <p>Vector search catches meaning (someone can ask a question in their own words); full-text search catches exact keywords. Combining them gives noticeably better answers than either alone.</p>
+            <div class="build-tip"><span class="build-tip-label">Tip</span> Use "Automated Embedding" when creating the vector index — it saves you from running a separate embedding pipeline. Check the region drop-down carefully; not every region supports it on the free tier.</div>
           </div>
         </li>
         <li class="build-step">
           <div class="build-step-num">7</div>
           <div class="build-step-body">
             <h3>Ask it to build the backend</h3>
-            <blockquote>"Build a simple web server with an endpoint that takes a question, searches the content for the most relevant matches, and uses an AI model to answer grounded in those matches."</blockquote>
+            <blockquote>"Build a simple web server with an endpoint that takes a question, searches the content for the most relevant matches, and uses an AI model to answer grounded in those matches. Keep API keys in a .env file."</blockquote>
             <p>You'll need access to an AI model to generate answers — MongoDB employees can use Grove (an internal tool); anyone else can use any OpenAI-compatible provider.</p>
+            <div class="build-tip"><span class="build-tip-label">Tip</span> Always keep secrets (MongoDB connection string, API keys) in a <code>.env</code> file, and add <code>.env</code> to your <code>.gitignore</code> from day one so you never accidentally push credentials to GitHub.</div>
           </div>
         </li>
         <li class="build-step">
           <div class="build-step-num">8</div>
           <div class="build-step-body">
             <h3>Ask it to build the website</h3>
-            <blockquote>"Build a simple webpage with a chat-style interface for asking questions, styled simply and cleanly."</blockquote>
+            <blockquote>"Build a simple webpage with a chat-style interface for asking questions, styled simply and cleanly with a dark theme and a single accent colour."</blockquote>
             <p>Claude Code builds the actual HTML, styling, and interactive behavior.</p>
+            <div class="build-tip"><span class="build-tip-label">Tip</span> Being opinionated about style upfront ("dark theme, MongoDB green accent, generous whitespace") saves you from a generic AI look. You can also save a short style guide file in your project so Claude keeps the same look as you add features.</div>
           </div>
         </li>
         <li class="build-step">
@@ -136,13 +144,44 @@
           <div class="build-step-body">
             <h3>Test it and just describe what's wrong</h3>
             <p>Click around. If something looks off or you want it to work differently, describe the problem in plain English — <em>"the answers aren't showing the source"</em> or <em>"I want a dropdown of topics instead of free text"</em> — and Claude Code makes the change. This is genuinely how every other feature in this app got built: by describing a need, not by writing code.</p>
+            <div class="build-tip"><span class="build-tip-label">Tip</span> When something breaks, paste the exact error message into Claude Code — the red text from your terminal or the browser console (right-click → Inspect → Console). Vague descriptions get vague fixes.</div>
           </div>
         </li>
         <li class="build-step">
           <div class="build-step-num">10</div>
           <div class="build-step-body">
-            <h3>Share it</h3>
-            <p>Once it works locally, share it temporarily with a free tool called <a href="https://ngrok.com" target="_blank" rel="noopener">ngrok</a>, which gives your locally running app a public web address without needing to formally deploy it anywhere.</p>
+            <h3>Share it temporarily with ngrok</h3>
+            <p>Once it works locally, share it temporarily with a free tool called <a href="https://ngrok.com" target="_blank" rel="noopener">ngrok</a>, which gives your locally running app a public web address without needing to formally deploy it anywhere. Great for showing a colleague right now, without committing to a real deployment.</p>
+            <div class="build-tip"><span class="build-tip-label">Tip</span> ngrok URLs change every time by default. Sign up for a free account to keep a stable URL for the length of a demo.</div>
+          </div>
+        </li>
+        <li class="build-step">
+          <div class="build-step-num">11</div>
+          <div class="build-step-body">
+            <h3>Deploy it permanently on Render</h3>
+            <p>For a real, stable public URL, deploy on <a href="https://render.com" target="_blank" rel="noopener">Render</a> — a free hosting service that pulls your code straight from GitHub. Push your project to a GitHub repository, connect it to Render, and set the same environment variables (MongoDB connection string, API keys) that you used locally.</p>
+            <div class="build-tip build-tip-warn">
+              <span class="build-tip-label">Important</span> There are two known issues that will bite you if you don't know about them in advance:
+              <ul>
+                <li><strong>Upgrade Atlas from M0 to M10.</strong> The free M0 tier intermittently blocks connections from Render's shared IP ranges, which shows up as random "connection refused" errors in production. Upgrading to M10 (a paid Atlas tier) resolves this. This is the single most common reason people give up at the deployment step.</li>
+                <li><strong>Your server must listen on <code>0.0.0.0</code> and the <code>PORT</code> Render provides.</strong> If it only listens on <code>localhost</code>, Render can't detect it and the deploy fails with "no open ports detected". Ask Claude Code to check both.</li>
+              </ul>
+            </div>
+            <div class="build-tip"><span class="build-tip-label">Tip</span> Add a <code>.node-version</code> file at the root of your repo containing your local Node version (find it with <code>node -v</code>). Otherwise Render may default to an older version that doesn't support newer syntax.</div>
+          </div>
+        </li>
+        <li class="build-step">
+          <div class="build-step-num">12</div>
+          <div class="build-step-body">
+            <h3>Make it public-safe before sharing widely</h3>
+            <p>Anyone with your URL can trigger AI calls, which cost money. Two small protections make this much safer:</p>
+            <ul>
+              <li>Add rate limiting so a single visitor can't spam the API endpoints.</li>
+              <li>Add basic authentication (a simple username/password prompt) if the app is meant for a specific audience rather than the whole internet.</li>
+            </ul>
+            <p>Ask Claude Code:</p>
+            <blockquote>"Add express-rate-limit to all /api routes at 30 requests per minute, and optional HTTP Basic auth gated by two environment variables."</blockquote>
+            <div class="build-tip"><span class="build-tip-label">Tip</span> Always keep an eye on your AI provider's usage dashboard for the first week after going public. If usage spikes unexpectedly, tighten the rate limit before your bill does.</div>
           </div>
         </li>
       </ol>
